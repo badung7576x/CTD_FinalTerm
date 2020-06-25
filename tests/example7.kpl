@@ -1,11 +1,18 @@
-Program Example2; (* Factorial *)
-   
-Var n : Integer;
+Program Example2; 
+
+const x = -.022;
+      y = 'hello world';
+      z = 'a';
+      w = 4;
+
+Var a : Integer;
+    b : Double;
+    c : String;
+    d : Char;
 
 Begin
-  For n := 1 To 7 Do
-    Begin
-      Call WriteLn;
-      Call WriteI( n );
-    End;
-End. (* Factorial *)
+  a := 10;
+  b := 10.2;
+
+  c := 'aaaa' + 'bbb';
+End. 

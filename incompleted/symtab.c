@@ -75,6 +75,40 @@ int compareType(Type* type1, Type* type2) {
   } else return 0;
 }
 
+// TODO:3x
+int compareTypeAssign(Type* type1, Type* type2) {
+  if (type1->typeClass == type2->typeClass) {
+    if (type1->typeClass == TP_ARRAY) {
+      if (type1->arraySize == type2->arraySize)
+	      return compareType(type1->elementType, type2->elementType);
+      else return 0;
+    } else return 1;
+  } else {
+    if (type1->typeClass == TP_DOUBLE && type2->typeClass == TP_INT) {
+      return 1;
+    } else if (type1->typeClass == TP_STRING && type2->typeClass == TP_CHAR) {
+      return 1;
+    } else return 0;
+  } 
+}
+
+// TODO:3x
+int compareTypeExpression(Type* type1, Type* type2) {
+  if (type1->typeClass == type2->typeClass) {
+    if (type1->typeClass == TP_ARRAY) {
+      if (type1->arraySize == type2->arraySize)
+	      return compareType(type1->elementType, type2->elementType);
+      else return 0;
+    } else return 1;
+  } else {
+    if ((type1->typeClass == TP_DOUBLE && type2->typeClass == TP_INT) || (type1->typeClass == TP_INT && type2->typeClass == TP_DOUBLE) ) {
+      return 1;
+    } else if ((type1->typeClass == TP_STRING && type2->typeClass == TP_CHAR) || (type1->typeClass == TP_CHAR && type2->typeClass == TP_STRING)) {
+      return 1;
+    } else return 0;
+  } 
+}
+
 void freeType(Type* type) {
   switch (type->typeClass) {
   case TP_INT:

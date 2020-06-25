@@ -156,7 +156,6 @@ void checkBasicType(Type* type) {
 }
 
 void checkArrayType(Type* type) {
-  // TODO
   if(type != NULL && type->typeClass == TP_ARRAY) {
     return;
   } else {
@@ -165,8 +164,19 @@ void checkArrayType(Type* type) {
 }
 
 void checkTypeEquality(Type* type1, Type* type2) {
-  // TODO
   if(compareType(type1, type2) == 0) {
+    error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+  }
+}
+
+void checkTypeAssign(Type* type1, Type* type2) {
+  if(compareTypeAssign(type1, type2) == 0) {
+    error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
+  }
+}
+
+void checkTypeExpression(Type* type1, Type* type2) {
+  if(compareTypeExpression(type1, type2) == 0) {
     error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
   }
 }

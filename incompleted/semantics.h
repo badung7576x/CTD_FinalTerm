@@ -25,5 +25,7 @@ void checkStringType(Type* type);             // TODO:3x
 void checkArrayType(Type* type);
 void checkBasicType(Type* type);
 void checkTypeEquality(Type* type1, Type* type2);
+void checkTypeAssign(Type* type1, Type* type2);       // TODO:3x
+void checkTypeExpression(Type* type1, Type* type2);       // TODO:3x
 
 #endif
