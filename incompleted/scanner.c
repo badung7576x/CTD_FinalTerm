@@ -75,44 +75,6 @@ Token* readIdentKeyword(void) {
   return token;
 }
 
-// Token* readNumber(void) {
-//   Token *token = makeToken(TK_NUMBER, lineNo, colNo);
-//   int count = 0;
-//   while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_DIGIT)) {
-//     token->string[count++] = (char)currentChar;
-//     readChar();
-//   }
-//   token->string[count] = '\0';
-//   token->value = atoi(token->string);
-//   return token;
-// }
-
-// Token* readConstChar(void) {
-//   Token *token = makeToken(TK_CHAR, lineNo, colNo);
-//   readChar();
-//   if (currentChar == EOF) {
-//     token->tokenType = TK_NONE;
-//     error(ERR_INVALID_CONSTANT_CHAR, token->lineNo, token->colNo);
-//     return token;
-//   }  
-//   token->string[0] = currentChar;
-//   token->string[1] = '\0';
-//   readChar();
-//   if (currentChar == EOF) {
-//     token->tokenType = TK_NONE;
-//     error(ERR_INVALID_CONSTANT_CHAR, token->lineNo, token->colNo);
-//     return token;
-//   }
-//   if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
-//     readChar();
-//     return token;
-//   } else {
-//     token->tokenType = TK_NONE;
-//     error(ERR_INVALID_CONSTANT_CHAR, token->lineNo, token->colNo);
-//     return token;
-//   }
-// }
-
 // TODO:3x
 Token* readNumber(void) {       
   Token *token = makeToken(TK_NONE, lineNo, colNo);
@@ -164,9 +126,35 @@ Token* readFloatingPointNumber(void) {
   return token;
 }
 
-// TODO:3x
 Token* readConstChar(void) {
-  Token *token = makeToken(TK_NONE, lineNo, colNo);
+  Token *token = makeToken(TK_CHAR, lineNo, colNo);
+  readChar();
+  if (currentChar == EOF) {
+    token->tokenType = TK_NONE;
+    error(ERR_INVALID_CONSTANT_CHAR, token->lineNo, token->colNo);
+    return token;
+  }  
+  token->string[0] = currentChar;
+  token->string[1] = '\0';
+  readChar();
+  if (currentChar == EOF) {
+    token->tokenType = TK_NONE;
+    error(ERR_INVALID_CONSTANT_CHAR, token->lineNo, token->colNo);
+    return token;
+  }
+  if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
+    readChar();
+    return token;
+  } else {
+    token->tokenType = TK_NONE;
+    error(ERR_INVALID_CONSTANT_CHAR, token->lineNo, token->colNo);
+    return token;
+  }
+}
+
+// TODO:3x
+Token* readString(void) {
+  Token *token = makeToken(TK_STRING, lineNo, colNo);
   int count = 0;
   readChar();
   if (currentChar == EOF) {
@@ -187,13 +175,8 @@ Token* readConstChar(void) {
     return token;
   }
 
-  if (charCodes[currentChar] == CHAR_SINGLEQUOTE) {
+  if (charCodes[currentChar] == CHAR_DOUBLEQUOTE) {
     readChar();
-    if(count > 1) {
-      token->tokenType = TK_STRING;
-    } else {
-      token->tokenType = TK_CHAR;
-    }
     return token;
   } else {
     token->tokenType = TK_NONE;
@@ -288,6 +271,7 @@ Token* getToken(void) {
       return makeToken(SB_ASSIGN, ln, cn);
     } else return makeToken(SB_COLON, ln, cn);
   case CHAR_SINGLEQUOTE: return readConstChar();
+  case CHAR_DOUBLEQUOTE: return readString();       // TODO:3x
   case CHAR_LPAR:
     ln = lineNo;
     cn = colNo;

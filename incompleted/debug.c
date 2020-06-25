@@ -43,10 +43,10 @@ void printConstantValue(ConstantValue* value) {
     printf("\'%c\'",value->charValue);
     break;
   case TP_DOUBLE:                             // TODO:3x
-    printf("\'%f\'",value->doubleValue);
+    printf("%f",value->doubleValue);
     break;
   case TP_STRING:                             // TODO:3x
-    printf("\'%s\'",value->stringValue);
+    printf("\"%s\"",value->stringValue);
     break;
   default:
     break;

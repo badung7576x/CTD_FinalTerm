@@ -653,7 +653,7 @@ Type* compileExpression2(void) {
   if (type2 == NULL) return type1;
   else {
     checkTypeExpression(type1,type2);       // TODO:3x  Kiem tra kieu du lieu cua 2 bien +-*/
-    return type1;
+    return priorityType(type1,type2);       // TODO:3x
   }
 }
 
@@ -668,18 +668,20 @@ Type* compileExpression3(void) {
       type1 = compileTerm();
       checkBasicType(type1);             // TODO:3x
       type2 = compileExpression3();
-      if (type2 != NULL)
-        checkNumberType(type2);           // TODO:3x
-      return type1;
+      if (type2 != NULL) {
+        checkBasicType(type2);           // TODO:3x
+        return priorityType(type1,type2);
+      } else return type1;
       break;
     case SB_MINUS:
       eat(SB_MINUS);
       type1 = compileTerm();
       checkNumberType(type1);             // TODO:3x
       type2 = compileExpression3();
-      if (type2 != NULL)
-        checkNumberType(type2);           // TODO:3x
-      return type1;
+      if (type2 != NULL) {
+        checkBasicType(type2);           // TODO:3x
+        return priorityType(type1,type2);
+      } else return type1;
       break;
       // check the FOLLOW set
     case KW_TO:

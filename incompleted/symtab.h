@@ -146,6 +146,7 @@ Type* makeDoubleType(void);                 // TODO:3x
 Type* makeStringType(void);                 // TODO:3x
 Type* makeArrayType(int arraySize, Type* elementType);
 Type* duplicateType(Type* type);
+Type* priorityType(Type* type1, Type* type2);         //  TODO:3x
 int compareType(Type* type1, Type* type2);
 int compareTypeAssign(Type* type1, Type* type2);     // TODO:3x
 int compareTypeExpression(Type* type1, Type* type2);     // TODO:3x

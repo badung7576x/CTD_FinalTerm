@@ -1,7 +1,7 @@
 Program Example2; 
 
 const x = -.022;
-      y = 'hello world';
+      y = "hello world";
       z = 'a';
       w = 4;
 
@@ -14,5 +14,5 @@ Begin
   a := 10;
   b := 10.2;
 
-  c := 'aaaa' + 'bbb';
+  d := 'a';
 End. 

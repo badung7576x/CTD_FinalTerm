@@ -64,6 +64,17 @@ Type* duplicateType(Type* type) {
   }
   return resultType;
 }
+ // TODO:3x
+Type* priorityType(Type* type1, Type* type2) {
+  if (type1->typeClass == type2->typeClass) {
+    if(type1->typeClass == TP_CHAR) return makeStringType();
+    return type1;
+  } else {
+    if (type1->typeClass == TP_DOUBLE || type1->typeClass == TP_STRING) {
+      return type1; 
+    } else return type2;
+  } 
+}
 
 int compareType(Type* type1, Type* type2) {
   if (type1->typeClass == type2->typeClass) {
@@ -84,9 +95,7 @@ int compareTypeAssign(Type* type1, Type* type2) {
       else return 0;
     } else return 1;
   } else {
-    if (type1->typeClass == TP_DOUBLE && type2->typeClass == TP_INT) {
-      return 1;
-    } else if (type1->typeClass == TP_STRING && type2->typeClass == TP_CHAR) {
+    if ((type1->typeClass == TP_DOUBLE && type2->typeClass == TP_INT) || (type1->typeClass == TP_STRING && type2->typeClass == TP_CHAR)) {
       return 1;
     } else return 0;
   } 
