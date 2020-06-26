@@ -1,0 +1,59 @@
+Program fibonacci;
+Var n : integer;
+Function Fibo(i : integer):integer;
+Begin
+    If i = 1 then Fibo := 1 Else
+    If i = 2 then Fibo := 1 Else
+    Fibo := Fibo(i-1) + Fibo(i-2);
+End;
+Begin
+    n := readi;
+    call writei(Fibo(n));
+End.
+
+Mã ngăn xếp 
+0:  J 35                => Jump đến hàm main
+1:  J 2                 => Jump để bỏ qua các thủ tục, hàm khác của chương trình.
+2:  INT 5               => Tăng thêm 5 frame trong stack: (RV,DL,RA,SL) + 1 frame của biến i
+3:  LV 0,4              => Load giá trị của biến i ( i nằm frame thứ 5 sau các frame RV,DL,RA,SL)
+4:  LC 1                => Load constant 1
+5:  EQ                  => So sánh 2 giá trị i và 1, nếu đúng trả về 1 vào đầu stack, ngược lại thì 0
+6:  FJ 11               => Nếu đỉnh stack = 0 (false) thì nhảy đến 11
+7:  LA 0,0              => Load giá trị trả về của hàm (RV)
+8:  LC 1                => Load constant 1
+9:  ST                  => Lưu giá trị 1 vào RV
+10:  J 34               => Nhảy đến vị trí 34 để thoát function
+11:  LV 0,4             => Load giá trị của biến i
+12:  LC 2               => Load constant 2
+13:  EQ                 => So sánh như trên
+14:  FJ 19              => Nếu sai thì nhảy đến 19 thực hiện câu lệnh khác.
+15:  LA 0,0             => Load giá trị trả về của function (frame RV)
+16:  LC 1               => Load constant 1
+17:  ST                 => Lưu 1 vào RV 
+18:  J 34               => Nhảy đến 34 để thoát khỏi function
+19:  LA 0,0             => Load giá trị trả về của function 
+20:  INT 4              => Tăng thêm 4 frame để chứa thông tin liên quan đến hàm đang gọi.
+21:  LV 0,4             => Load gía trị của biến i 
+22:  LC 1               => Load consant 1 
+23:  SB                 => Tính i - 1 
+24:  DCT 5              => Giảm 4 + k (k: số tham số của function) frame trong stack 
+25:  CALL 1,1           => Gọi function nhảy đến base(1) + 1 để thực hiện chương trình.
+26:  INT 4              => Tương tự phần vừa rồi để gọi Fibo(n-2)
+27:  LV 0,4             => Load giá trị của i
+28:  LC 2               => Load constant 2
+29:  SB                 => Tính i - 2 
+30:  DCT 5              => Giảm 4 + k frame trong stack
+31:  CALL 1,1           => Gọi function Fibo
+32:  AD                 => Sau khi có Fibo(n-1), Fibo(n-2) ở đầu stack thì cộng 2 giá trị với nhau.
+33:  ST                 => Lưu giá trị vừa tìm được vào RV 
+34:  EF                 => Thoát khỏi Function, cập nhật lại vị trí stack lúc vừa gọi hàm ở main
+35:  INT 5              => Tăng thêm 5 frame trong stack: (RV,DL,RA,SL) + 1 frame của biến cục bộ n
+36:  LA 0,4             => Load địa chỉ của biến n lên đầu stack
+37:  RI                 => Đọc 1 số integer từ bàn phím lưu vào đầu stack
+38:  ST                 => Lưu giá trị vào ô nhớ n dựa vào địa chỉ của n
+39:  INT 4              => Tăng thêm 4 frame trong stack để chứa các thông tin liên quan đến hàm: 
+40:  LV 0,4             => Load giá trị của biến biến n truyền vào function 
+41:  DCT 5              => Giảm con trỏ pc trong stack xuống 4 + k (k là số tham số của function) ô
+42:  CALL 0,1           => Gọi function nhảy đến stack số  base(0) + 1
+43:  WRI                => Viết kết qủa ra màn hình
+44:  HL                 => Halt

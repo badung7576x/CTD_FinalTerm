@@ -1,10 +1,12 @@
-Program Example5; (* Example 1 *)
-const c = 1;
-type t = char;
-function f(i : integer):char;
-const b = c;
-type a = array(.5.) of t;
-begin
-end;
+Program fibonacci;
+Var n : integer;
+Function Fibo(i : integer):integer;
 Begin
-End. (* Example 1 *)
+    If i = 1 then Fibo := 1 Else
+    If i = 2 then Fibo := 1 Else
+    Fibo := Fibo(i-1) + Fibo(i-2);
+End;
+Begin
+    n := readi;
+    call writei(Fibo(n));
+End.
