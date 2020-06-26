@@ -161,3 +161,62 @@ void compileSwitchSt(void ) {
 }
 ```
 
+#### Bài 3: Thêm string, double vào văn phạm. (không có phần codegen)
+Code TODO:3x   => Code ở branch feature/bai3-not-codegen
+
+charcode.h
+- Thêm CHAR_DOUBLEQUOTE vào enum CharCode   => Kí tự bắt đầu của 1 string trong văn phạm
+
+charcode.c
+- Sửa CHAR_UNKNOWN sau CHAR_EXCLAIMATION=> CHAR_DOUBLEQUOTE (mã của \" trong bảng ASCII)
+
+token.h
+- Thêm KW_STRING, KW_DOUBLE, TK_STRING, TK_DOUBLE vào enum TokenType
+
+token.c
+- Định nghĩa KW_STRING, KW_DOUBLE vào mảng các keywords
+- Thêm các case mới cho KW và TK vừa thêm vào hàm tokenToString()
+
+scanner.c
+- Sửa lại hàm readNumber() để đọc thêm số double.
+- Thêm hàm readFloatingPointNumber() để đọc trường hợp số thực bắt đầu bằng dấu .
+- Thêm hàm readString() để đọc string.
+- Thêm case CHAR_DOUBLEQUOTE vào hàm getToken() => Đọc string
+- Sửa lại case CHAR_PERIOD của hàm getToken() => Gọi thêm hàm  readFloatingPointNumber() khi số bắt đầu bằng dấu .      
+- Thêm các case của KW, TK mới hàm printToken()
+
+semantics.h
+- Thêm định nghĩa các hàm checkNumberType(), checkStringType(), checkTypeAssign(), checkTypeExpression()
+
+semantics.c
+- Viết các hàm vừa định nghĩa trong semantics.h
+
+symtab.h
+- Thêm 2 type mới TP_DOUBLE, TP_STRING vào enum TypeClass 
+- Thêm 2 ô loại ô nhớ doubleValue, stringValue để lưu dữ liệu vào struct ConstantValue
+- Thêm định nghĩa các hàm makeDoubleType(), makeStringType() => Tạo kiểu dữ liệu mới
+- Thêm định nghĩa hàm priorityType() => Trả về Type có độ ưu tiên cao hơn
+- Thêm định nghĩa hàm compareTypeAssign(), compareTypeExpression() => Ép kiểu dữ liệu 
+- Thêm định nghĩa các hàm makeDoubleConstant(), makeStringConstant() => Tạo constant mới
+
+symtab.c
+- Thêm stringType, doubleType => Sử dụng để extern bên parser.c
+- Viết các hàm được định nghĩa trong symtab.h
+- Thêm các case TP_DOUBLE, TP_STRING mới vào hàm freeType() => Clean 2 kiểu dữ liệu mới
+- Sửa lại hàm duplicateConstantValue() => Duplicate 2 kiểu dữ liệu mới
+- Trong hàm initSymTab(), khởi tạo thêm các hàm reads, readd, writes, writec, gán giá trị cho doubleType, stringType khai báo phía trên. 
+
+parse.c
+- extern 2 biến stringType, doubleType bên symtab.c sang.
+- Sửa lại các hàm liên quan đến constant, type, expression..
+
+
+debug.c
+- Thêm các case của kiểu dữ liệu mới vào printType(), printConstantValue()
+
+error.h
+- Thêm ERR_INVALID_DOUBLE vào enum ErrorCode => Báo lỗi khi đọc số double
+
+error.c
+- Định nghĩa lỗi ERR_INVALID_DOUBLE trong mảng errors
+
