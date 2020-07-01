@@ -57,6 +57,8 @@ scanner.c
 parser.c
 - Thêm case SB_EXP vào compileTerm2 => Đọc lại văn phạm.
 
+// Update: Phần codegen của bài này không làm theo cách này. Không đc thêm opcode mới.
+
 codegen.h 
 - Thêm định nghĩa hàm genEXP(void) 
 
